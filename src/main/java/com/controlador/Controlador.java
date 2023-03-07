@@ -24,13 +24,12 @@ public class Controlador {
 	@Autowired
 	private MapperProveedor mapper;
 
-	@GetMapping("/proveedores/{idCliente}")
+	@GetMapping("/proveedores/{id}")
 	@ResponseBody
-	public ResponseEntity<List<ProveedorDTO>> listarProveedoresXCliente(@PathVariable("idCliente") int idCliente) {
+	public ResponseEntity<List<ProveedorDTO>> listarProveedoresXCliente(@PathVariable("id") int idCliente) {
 		try {
-			return new ResponseEntity<List<ProveedorDTO>>(
-					servicio.buscaquedaXIdCliente(idCliente).stream().map(mapper::mapeoADTO).collect(Collectors.toList()),
-					HttpStatus.OK);
+			return new ResponseEntity<List<ProveedorDTO>>(servicio.buscaquedaXIdCliente(idCliente).stream()
+					.map(mapper::mapeoADTO).collect(Collectors.toList()), HttpStatus.OK);
 		} catch (ExcepcionServicio e) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
 		}
