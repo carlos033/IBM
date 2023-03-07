@@ -34,7 +34,11 @@ public class Controlador {
 			listaDTO = servicio.buscaquedaXIdCliente(idCliente).stream().map(mapper::mapeoADTO)
 					.collect(Collectors.toList());
 		} catch (ExcepcionServicio e) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+			if (e.getMessage().contains("Ha ocurrido una")) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+			} else {
+				throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
