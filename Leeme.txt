@@ -1,0 +1,14 @@
+Como arrancar -->
+1º realizar un clean install con maven
+2º abrimos la consola en la carpeta del proyecto y usamos el comando mvnw spring-boot:run (Es necesario tener arrancado un gestor de BD yo he usado Mysql de Xampp)
+3º meter en el navegador o en el postman http://localhost:8080/proveedores/2 (el numero 2 es el id de cliente puede ser 1, 2 o 3 el que se quiera probar)
+4º No lleva ninugn scrip de BD porque ya lleva precargados los datos
+
+Dependencias -->
+Springboot
+SpringData
+Lombok
+mapstruct
+mysql
+
+El fichero se genera el la Carpeta base del proyecto con el nombre de Resultado.txt
