@@ -12,8 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Table
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 public class Proveedor implements Serializable {
 
@@ -31,4 +31,8 @@ public class Proveedor implements Serializable {
 		this.idCliente = idCliente;
 	}
 
+	@Override
+	public String toString() {
+		return "" + id + "\t   " + nombre + "\t    " + fechaAlta + "\t      " + idCliente;
+	}
 }

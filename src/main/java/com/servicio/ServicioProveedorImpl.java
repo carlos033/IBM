@@ -1,5 +1,8 @@
 package com.servicio;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,12 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	private ProveedorRepository repositorio;
 
 	@Override
-	public List<Proveedor> buscaquedaXIdCliente(int idCliente) throws ExcepcionServicio {
+	public List<Proveedor> buscaquedaXIdCliente(int idCliente) throws ExcepcionServicio, IOException {
 		List<Proveedor> listaProveedores = repositorio.findProveedoresByIdCliente(idCliente);
 		if (listaProveedores.size() == 0) {
 			throw new ExcepcionServicio("No existen proveedores con ese Id del cliente");
+		} else {
+			crearFichero(listaProveedores);
 		}
 		return listaProveedores;
 	}
@@ -30,19 +35,26 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	}
 
 	@Override
-	public List<Proveedor> todas() {
-		List<Proveedor> listaProvedores = repositorio.findAll();
-		return listaProvedores;
-	}
-
-	@Override
 	public Proveedor busacrXid(int id) throws ExcepcionServicio {
 		Proveedor proveedor = repositorio.findById(id).orElse(null);
 		if (proveedor == null) {
 			throw new ExcepcionServicio("No existen proveedores con ese Id del cliente");
-
 		}
 		return proveedor;
 	}
 
+	public void crearFichero(List<Proveedor> listaProveedores) throws IOException {
+		FileWriter fichero = new FileWriter("Resultado.txt");
+		try {
+			BufferedWriter bw = new BufferedWriter(fichero);
+			bw.write("id \t   nombre \t    fecha alta \t  idCliente \t \n");
+			for (Proveedor proveedor : listaProveedores) {
+				bw.write(proveedor.toString() + "\n");
+			}
+			bw.close();
+			fichero.close();
+		} catch (IOException ex) {
+			throw new IOException(ex.getMessage());
+		}
+	}
 }

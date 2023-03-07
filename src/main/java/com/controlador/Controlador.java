@@ -1,5 +1,7 @@
 package com.controlador;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,29 +29,15 @@ public class Controlador {
 	@GetMapping("/proveedores/{idC}")
 	@ResponseBody
 	public ResponseEntity<List<ProveedorDTO>> listarProveedoresXCliente(@PathVariable("idC") int idCliente) {
+		List<ProveedorDTO> listaDTO = new ArrayList<>();
 		try {
-			return new ResponseEntity<List<ProveedorDTO>>(servicio.buscaquedaXIdCliente(idCliente).stream()
-					.map(mapper::mapeoADTO).collect(Collectors.toList()), HttpStatus.OK);
+			listaDTO = servicio.buscaquedaXIdCliente(idCliente).stream().map(mapper::mapeoADTO)
+					.collect(Collectors.toList());
 		} catch (ExcepcionServicio e) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-	}
-
-	@GetMapping("/listaProveedores/{id}")
-	@ResponseBody
-	public ResponseEntity<ProveedorDTO> listarProveedoresCliente(@PathVariable("id") int id) {
-		try {
-			return new ResponseEntity<ProveedorDTO>(mapper.mapeoADTO(servicio.busacrXid(id)), HttpStatus.OK);
-		} catch (ExcepcionServicio e) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-		}
-	}
-
-	@GetMapping("/listar")
-	@ResponseBody
-	public ResponseEntity<List<ProveedorDTO>> listarTodos() {
-		return new ResponseEntity<List<ProveedorDTO>>(
-				servicio.todas().stream().map(mapper::mapeoADTO).collect(Collectors.toList()), HttpStatus.OK);
+		return new ResponseEntity<List<ProveedorDTO>>(listaDTO, HttpStatus.OK);
 	}
 }
