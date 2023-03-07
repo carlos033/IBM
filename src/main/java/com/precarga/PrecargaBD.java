@@ -27,6 +27,8 @@ public class PrecargaBD {
 	@Transactional
 	public void precargarBaseDeDatos() throws ExcepcionServicio {
 		try {
+			servicio.busacrXid(1);
+		} catch (ExcepcionServicio ex) {
 			LocalDate fecha = LocalDate.of(2019, 01, 10);
 			Proveedor proveedor1 = new Proveedor("CocaCola", fecha, 2);
 			LocalDate fecha2 = LocalDate.of(2019, 02, 10);
@@ -40,8 +42,6 @@ public class PrecargaBD {
 			servicio.crearProveedor(proveedor3);
 			servicio.crearProveedor(proveedor2);
 			servicio.crearProveedor(proveedor1);
-		} catch (ExcepcionServicio ex) {
-			throw new ExcepcionServicio(ex.getMessage());
 		}
 	}
 

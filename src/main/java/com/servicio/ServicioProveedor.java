@@ -10,5 +10,7 @@ public interface ServicioProveedor {
 
 	public List<Proveedor> todas();
 
+	public Proveedor busacrXid(int id) throws ExcepcionServicio;
+
 	public void crearProveedor(Proveedor entidad) throws ExcepcionServicio;
 }

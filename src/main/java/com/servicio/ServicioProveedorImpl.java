@@ -35,4 +35,14 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 		return listaProvedores;
 	}
 
+	@Override
+	public Proveedor busacrXid(int id) throws ExcepcionServicio {
+		Proveedor proveedor = repositorio.findById(id).orElse(null);
+		if (proveedor == null) {
+			throw new ExcepcionServicio("No existen proveedores con ese Id del cliente");
+
+		}
+		return proveedor;
+	}
+
 }
