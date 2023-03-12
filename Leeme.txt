@@ -6,6 +6,7 @@ Como arrancar -->
 5º No lleva ninugn scrip de BD porque ya lleva precargados los datos
 
 Dependencias -->
+Java 11
 Springboot
 SpringData
 SpringDoc
